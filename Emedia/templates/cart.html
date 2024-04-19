@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+
+{% block title %}
+    
+{% endblock title %}
+
+    
+{% block css %}
+
+{% endblock css %}
+
+{% block body %}
+<div class="container" style="min-height: 100vh;">
+{% for i in forms %}
+<div class="card mb-3">
+   <div class="row g-0">
+     <div class="col-md-4">
+       <img src="{{i.cart.image.url}}" class="img-fluid rounded-start" style="height: 200px;">
+     </div>
+     <div class="col-md-8">
+       <div class="card-body">
+         <h5 class="card-title">{{i.cart.title}}</h5>
+         <p class="card-text">{{i.cart.description}}</p>
+         <p>Quantity: <a href="{% url 'increasecart' i.cart.id %}"><button class="btn btn-info">+</button></a> {{i.quantity}} <a href="{% url 'decreasecart' i.cart.id %}"><button class="btn btn-info">-</button></a> 
+         </p>
+         <p>Rs.{{i.cart.price}}</p>
+       </div>
+       <a href="{% url 'removecart' i.id %}"><button class="btn btn-primary">Remove</button></a>
+     </div>
+   </div>
+ </div>
+ {% endfor %}
+ <p>Total : Rs. {{total}}</p><a href="{% url 'checkout' %}"><button class="btn btn-warning">Checkout</button></a>
+</div>
+{% endblock body %}
+    
+
+{% block js %}
+    
+{% endblock js %}

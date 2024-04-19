@@ -1,0 +1,148 @@
+{% extends 'base.html' %}
+
+{% block title %}
+
+{% endblock title %}
+
+
+{% block css %}
+<style>
+    .rating {
+        position: relative;
+        display: inline-block;
+        height: 50px;
+        line-height: 50px;
+        font-size: 50px;
+    }
+
+    .rating label {
+        top: 0;
+        left: 0;
+        height: 100%;
+        cursor: pointer;
+        position: absolute;
+    }
+
+    .rating label:last-child {
+        position: static;
+    }
+
+    .rating label:nth-child(1) {
+        z-index: 5;
+    }
+
+    .rating label:nth-child(2) {
+        z-index: 4;
+    }
+
+    .rating label:nth-child(3) {
+        z-index: 3;
+    }
+
+    .rating label:nth-child(4) {
+        z-index: 2;
+    }
+
+    .rating label:nth-child(5) {
+        z-index: 1;
+    }
+
+    .rating label input {
+        position: absolute;
+        top: 0;
+        left: 0;
+        opacity: 0;
+    }
+
+    .rating label .icon {
+        float: left;
+        color: transparent;
+    }
+
+    .rating label:last-child .icon {
+        color: #000;
+    }
+
+    .rating:not(:hover) label input:checked~.icon,
+    .rating:hover label:hover input~.icon {
+        color: yellow;
+    }
+
+    .rating label input:focus:not(:checked)~.icon:last-child {
+        color: #000;
+        text-shadow: 0 0 5px yellow;
+    }
+</style>
+{% endblock css %}
+
+{% block body %}
+<div class="row">
+    {% for i in forms %}
+    <div class="col-6">
+        <img src="{{i.image.url}}">
+    </div>
+    <div class="col-6">
+        <h1>{{i.title}}</h1>
+        <p>{{i.description}}</p>
+        <p>Rs. {{i.price}}</p>
+        <a href="{% url 'cart' i.id %}" class="btn btn-primary">Add to Cart</a>
+    </div>
+</div>
+    <h1>Rate this Product</h1>
+    <div class="rating d-flex m-2">
+        <form action="{% url 'rating' i.id %}" method="POST">
+            {% csrf_token %}
+        <label>
+            <input type="radio" name="stars" value="1" />
+            <span class="icon">★</span>
+        </label>
+        <label>
+            <input type="radio" name="stars" value="2" />
+            <span class="icon">★</span>
+            <span class="icon">★</span>
+        </label>
+        <label>
+            <input type="radio" name="stars" value="3" />
+            <span class="icon">★</span>
+            <span class="icon">★</span>
+            <span class="icon">★</span>
+        </label>
+        <label>
+            <input type="radio" name="stars" value="4" />
+            <span class="icon">★</span>
+            <span class="icon">★</span>
+            <span class="icon">★</span>
+            <span class="icon">★</span>
+        </label>
+        <label>
+            <input type="radio" name="stars" value="5" />
+            <span class="icon">★</span>
+            <span class="icon">★</span>
+            <span class="icon">★</span>
+            <span class="icon">★</span>
+            <span class="icon">★</span>
+        </label>
+    </div>
+    <h1>Write your review</h1>
+    <input type="text" name="review" id="review" placeholder="Type Something..." style="width: 100%; height:50px;">
+    <input type="submit" value="Submit Review" class="btn btn-primary p-3 mt-3">
+</form>
+</div>
+{% endfor %}
+<div class="row mt-4">
+    <h1>User Reviews</h1>
+    {% for i in review %}
+    <div class="container" style="border: 1px solid black; margin-left: 10px;">
+        <p><b>{{i.user}}</b></p>
+        <p>{{i.rating}}⭐</p>
+        <p style="padding-top: 15px;">{{i.review}}</p>
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock body %}
+
+
+{% block js %}
+
+{% endblock js %}

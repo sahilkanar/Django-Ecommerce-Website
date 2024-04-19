@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block title %}
+    
+{% endblock title %}
+
+    
+{% block css %}
+
+{% endblock css %}
+
+{% block body %}
+
+<div class="container-fluid" style="min-height: 100vh;">
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th scope="col">SR.No</th>
+            <th scope="col">Product Names</th>
+            <th scope="col">Quantity</th>
+            <th scope="col">PRICE</th>
+            <th scope="col">ORDER STATUS</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for i in orders %}
+        <tr>
+            <th scope="row">{{forloop.counter}}</th>
+            <td>{{i.product.title}}</td>
+            <td>{{i.quantity}}</td>
+            <td>{{i.product.price}}</td>
+            <td>{{i.status}}</td>
+        </tr>
+        {% endfor %}
+       
+    </tbody>
+</table>
+</div>
+{% endblock body %}
+    
+
+{% block js %}
+    
+{% endblock js %}
